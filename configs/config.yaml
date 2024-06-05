@@ -1,0 +1,25 @@
+data_path: 'Data/'
+dict_path: 'Dict/'
+train_fname: 'processed_train.csv'
+val_fname: 'processed_eval.csv'
+dict_fname: 'processed_dictionary.json'
+
+# if use all corpus,
+# train length: 3,390,121
+# val, test length: 374,927 / 2 each
+# 1 epoch training takes 20h in Colab with batch size 16, using A100
+
+# if use only some portion of corpus,
+# train length: 262,448
+# val, test length: 56239, 56240 each
+# 1 epoch training takes 1h in Colab with batch size 32, using A100
+use_all_corpus: False
+
+run_name: ''
+load_checkpoint: False
+checkpoint_load_path: ''
+use_wandb: False
+
+batch_size: 32
+num_epochs: 5
+lr: 0.00001
