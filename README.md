@@ -2,7 +2,9 @@
 
 ## 프롬프트 학습을 이용한 한국어 단어 중의성 해소 프로젝트
 
+2024 Spring
 COSE461-02 Natural Language Processing
+Project page
 
 ## 개요
 
@@ -122,7 +124,7 @@ Prompt-based laerning은 기존 입력 $x$에 prompting function $f$를 적용�
 
 | Model      	| Accuracy 	| F1(weighted) 	|
 |------------	|----------	|--------------	|
-| [Bi-Encoder (DistilKoBERT)] (https://github.com/lih0905/WSD_kor.git)  	| 88.33  	| 0.883      	|
+| [Bi-Encoder (DistilKoBERT)](https://github.com/lih0905/WSD_kor.git)  	| 88.33  	| 0.883      	|
 | [KoELECTRA](https://www-dbpia-co-kr-ssl.oca.korea.ac.kr/journal/articleDetail?nodeId=NODE11224131) 	| 92.90  	| -       |
 | [KoELECTRA + prompt based learning](https://www-dbpia-co-kr-ssl.oca.korea.ac.kr/journal/articleDetail?nodeId=NODE11224131)	| 93.70  	| -       |
 | KoELECTRA + CLS head + prompt based laerning (ours) 	| <b>96.52</b>  	| <b>0.965</b>       |
