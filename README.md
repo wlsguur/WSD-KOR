@@ -2,6 +2,8 @@
 
 ## 프롬프트 학습을 이용한 한국어 단어 중의성 해소 프로젝트
 
+COSE461-02 Natural Language Processing
+
 ## 개요
 
 ```
@@ -94,10 +96,6 @@
 
 다의어의 의미에 대한 정보는 `WSD`라는 키에 대응되어 있으며, 이를 통해 문장에서 해당 다의어의 인덱스 정보(`begin`, `end`), 형태소 정보(`pos`), 우리말샘 기준 의미 정보(`sense_id`) 등의 정보를 제공합니다. 
 
-어휘 뭉치 데이터의 구축은 다음 프로세스를 통해 이루어졌습니다.
-
-![diagram](https://github.com/lih0905/WSD_kor/blob/master/images/diagram.png?raw=true)
-
 어휘 의미 말뭉치는 국립국어원 말뭉치 홈페이지에서 신청서를 작성, 허가 후 다운로드 받을 수 있습니다. 더 자세한 사항은 해당 데이터를 구축한 고려대학교 연구진이 국립국어원에 제출한 [분석보고서](https://korean.go.kr/common/download.do;front=705CF43F5B77029E1B5BE09E8910830F?file_path=reportData&c_file_name=f7222492-4580-40c6-864f-b66caeeeab3c_0.pdf&o_file_name=%EC%B5%9C%EC%A2%85%20%EB%B3%B4%EA%B3%A0%EC%84%9C_%EC%96%B4%ED%9C%98%EC%9D%98%EB%AF%B8%20%EB%B6%84%EC%84%9D%20%EB%A7%90%EB%AD%89%EC%B9%98%20%EA%B5%AC%EC%B6%95.pdf)에 수록되어 있습니다.
 
 이 모델에서는 어휘 말뭉치 중 매 10번째 문맥 데이터를 평가 데이터, 그 외를 훈련 데이터로 사용하였습니다.
@@ -109,45 +107,25 @@
 
 > 우리말의 쓰임이 궁금할 때 국어사전을 찾게 됩니다. 그런데 막상 사전을 찾아도 정보가 없거나 설명이 어려워 아쉬움을 느낄 때가 있습니다. 그동안 간행된 사전들은 여러 가지 제약이 있어 정보를 압축하여 제한적으로 수록하였기 때문입니다.<br> 사용자가 참여하는 ‘우리말샘’은 이런 문제점을 극복하고자 기획되었습니다. 한국어를 사용하는 우리 모두가 주체가 되어 예전에 사용되었거나 현재 사용되고 있는 어휘를 더욱 다양하고 알기 쉽게 수록하고자 합니다. 또한 전통적인 사전 정보 이외에 다양한 언어 지식도 실어 한국어에 관한 많은 궁금증을 푸는 통로가 되고자 합니다.
 
-우리말샘은 다음과 같이 전문가가 감수한 전통적인 의미에 더해 참여자가 제안한 정보 또한 수록되어, 갈수록 다양해지고 있는 어휘의 의미들을 품기에 적합한 사전입니다. 
-
-![우리말](https://github.com/lih0905/WSD_kor/blob/master/images/urimal.png?raw=true)
-
-우리말샘은 누구나 자유롭게 이용할 수 있는 `크리에이티브 커먼즈 저작자표시-동일조건변경허락 2.0 대한민국 라이선스`에 따라 배포되며, 회원 가입 후 사전 전체를 XML 파일로 다운로드 할 수 있습니다. 
+우리말샘은 다음과 같이 전문가가 감수한 전통적인 의미에 더해 참여자가 제안한 정보 또한 수록되어, 갈수록 다양해지고 있는 어휘의 의미들을 품기에 적합한 사전입니다. 누구나 자유롭게 이용할 수 있는 `크리에이티브 커먼즈 저작자표시-동일조건변경허락 2.0 대한민국 라이선스`에 따라 배포되며, 회원 가입 후 사전 전체를 XML 파일로 다운로드 할 수 있습니다. 
 
 
 ## Prompt-based Learning
 
 ![prompt-based learning](https://github.com/wlsguur/WSD_KOR/assets/140404752/4fac8679-5675-4120-825c-d87e61cea105)
 
-## 프롬프트 생성
-
-문장과 다의어 정보로 구성된 데이터셋은 다음과 같은 형태입니다.
-
-```
-'form' : '실제 애플이 겨냥하는 상대는 구글이지 삼성전자가 아니라는 평가도 나온다.'
- 'WSD' :  [{'word': '겨냥',
-            'sense_id': 1,
-            'pos': 'NNG',
-            'begin': 7,
-            'end': 9,
-            'word_id': 3},
-            ...]
-```
-
-## 모델
-
-* Baseline : 사전 학습된 [KoELECTRA](https://github.com/monologg/KoELECTRA.git)
-* 이 중 [KoELECTRA-Base-v3](https://huggingface.co/monologg/koelectra-base-v3-discriminator) 을 이용
+Prompt-based laerning은 기존 입력 $x$에 prompting function $f$를 적용한 $x' = f(x)$를 모델의 입력으로 하여 fine-tuning 시키는 방법입니다. 그림과 같이 감정 분석을 수행하는 경우, 입력의 형태를 [MASK] 토큰을 포함한 프롬프트 형식으로 바꾸어 모델이 토큰에 해당하는 단어를 학습하도록 합니다. 모델이 예측한 단어를 다시 기존 label에 메핑시켜 loss를 흘려주어 모델을 학습시킵니다.
 
 ## 모델 학습 결과 
 
+학습에는 [KoELECTRA-Base-v3](https://huggingface.co/monologg/koelectra-base-v3-discriminator) 을 이용
+
 | Model      	| Accuracy 	| F1(weighted) 	|
 |------------	|----------	|--------------	|
-| Baseline   	| 0.8595  	| 0.8586      	|
-| [Bi-encoder](https://github.com/lih0905/WSD_kor.git) 	| 0.8833  	| 0.8829       |
-| [KoELECTRA](https://www-dbpia-co-kr-ssl.oca.korea.ac.kr/journal/articleDetail?nodeId=NODE11224131) 	| 0.9370  	| -       |
-| KoELECTRA (ours) 	| <b>0.9639</b>  	| <b>0.9640</b>       |
+| [Bi-Encoder (DistilKoBERT)] (https://github.com/lih0905/WSD_kor.git)  	| 88.33  	| 0.883      	|
+| [KoELECTRA](https://www-dbpia-co-kr-ssl.oca.korea.ac.kr/journal/articleDetail?nodeId=NODE11224131) 	| 92.90  	| -       |
+| [KoELECTRA + prompt based learning](https://www-dbpia-co-kr-ssl.oca.korea.ac.kr/journal/articleDetail?nodeId=NODE11224131)	| 93.70  	| -       |
+| KoELECTRA + CLS head + prompt based laerning (ours) 	| <b>96.52</b>  	| <b>0.965</b>       |
 
 ## 사용법
 
