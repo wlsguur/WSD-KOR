@@ -197,8 +197,13 @@ Prompt-based laerning은 기존 입력 $x$에 prompting function $f$를 적용�
     
         return {"inputs": inputs, "labels": labels}
     ```
+* config 파일 경로
 
-* Baseline 모델 검증
+    ```bash
+    configs/config.yaml
+    ```
+
+* Baseline (pre-trained KoELECTRA) 모델 검증
 
     ```bash
     python baseline.py
@@ -208,6 +213,12 @@ Prompt-based laerning은 기존 입력 $x$에 prompting function $f$를 적용�
 
     ```bash
     python train.py
+    ```
+
+* 특정 체크포인트를 불러와 검증만 수행
+
+    ```bash
+    python eval.py
     ```
 
 ## References
