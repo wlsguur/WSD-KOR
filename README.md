@@ -116,7 +116,7 @@ Project page
 
 ![prompt-based learning](https://github.com/wlsguur/WSD_KOR/assets/140404752/4fac8679-5675-4120-825c-d87e61cea105)
 
-Prompt-based laerning은 기존 입력 $x$에 prompting function $f$를 적용한 $x' = f(x)$를 모델의 입력으로 하여 fine-tuning 시키는 방법입니다. 그림과 같이 감정 분석을 수행하는 경우, 입력의 형태를 [MASK] 토큰을 포함한 프롬프트 형식으로 바꾸어 모델이 토큰에 해당하는 단어를 학습하도록 합니다. 모델이 예측한 단어를 다시 기존 label에 메핑시켜 loss를 흘려주어 모델을 학습시킵니다.
+Prompt-based learning은 기존 입력 $x$에 prompting function $f$를 적용한 $x' = f(x)$를 모델의 입력으로 하여 fine-tuning 시키는 방법입니다. 그림과 같이 감정 분석을 수행하는 경우, 입력의 형태를 [MASK] 토큰을 포함한 프롬프트 형식으로 바꾸어 모델이 토큰에 해당하는 단어를 학습하도록 합니다. 모델이 예측한 단어를 다시 기존 label에 메핑시켜 loss를 흘려주어 모델을 학습시킵니다.
 
 ## Project pipeline
 ![pipeline](https://github.com/wlsguur/WSD-KOR/assets/140404752/3f04f2dd-04a9-452c-83e9-4fb9b4455e5b)
